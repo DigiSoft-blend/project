@@ -1,0 +1,25 @@
+.AboutMe-btn{
+    position: relative;
+    top: 20px;
+    padding: 14px;
+    bottom: 20px;
+    color: #eee;
+    background: linear-gradient(to left,rgb(245, 8, 166),rgb(150, 9, 168) ,rgb(101, 57, 224));
+    border-radius: 10px;
+  }
+
+  .alert-box{
+    border: 1px solid blue;
+    padding: 10px;
+    box-shadow: 0px 0px 10px 2px gainsboro;
+    border-radius: 10px;
+  }
+  
+  .cover{
+    /* background: linear-gradient(to right, rgba(45, 45, 46, 0.733),rgba(10, 46, 100, 0.199),rgba(29, 29, 54, 0.884));
+   */
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+  }
+  
