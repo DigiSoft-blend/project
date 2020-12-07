@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
 
   <link rel="stylesheet" href="../assets/css/mobster.css">
+  <link rel="stylesheet" href="../assets/css/mystyle.css">
 </head>
 <body>
 
@@ -49,6 +50,12 @@
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="blog.html">Blog</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ route('Signin') }}">Sign In</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="blog.html">Sign Up</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="updates.html">What's New</a>
@@ -87,24 +94,40 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 py-3">
-          <article class="blog-entry">
+
+        @foreach($user as $User)
+        <!-- Comments -->
+        
+        
+        <h3>{{ $User->id }}</h3>
+        <h3>{{ $User->name }}</h3>
+
+        
+        <a href="{{ route('getuserpostcomment') }}" style="color:black; text-decoration:none">View Your Post</a> 
+
+        @endforeach
+
+        @foreach( $userpost as $user)
+         @foreach($user->post as $Post)
+            <article class="blog-entry">
             <div class="entry-header">
               <div class="post-thumbnail">
-                <img src="../assets/img/blogs/blog_4.jpg" alt="">
+                <img src="{{ asset('postimg') }}/{{ $Post->image }}" alt="">
               </div>
               <div class="post-date">
                 <h3>20</h3>
                 <span>Feb</span>
               </div>
             </div>
-            <div class="post-title"><a href="blog-details.html">Duis feugiat neque sed dolor cursus, sed lacinia nisl pretium</a></div>
+            <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
             <div class="entry-meta mb-2">
               <div class="meta-item entry-author">
                 <div class="icon">
                   <span class="mai-person"></span>  
                 </div>
-                by <a href="#">Admin</a>
+                by <a href="#">{{ $user->name }}</a>
               </div>
+            
               <div class="meta-item">
                 <div class="icon">
                   <span class="mai-pricetags"></span>
@@ -115,94 +138,66 @@
               </div>
               <div class="meta-item">
                 <div class="icon">
-                  <span class="mai-chatbubble-ellipses"></span>
+                 <a href="/getcomment/{{ $Post->id }}" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
+                
                 </div>
-                <a href="#">24 Comments</a>
+                <span>{{$Post->comments()->count()}} 
+                    @if($Post->comments()->count() > 1)
+                     Comments
+                    @else
+                     Comment
+                    @endif
+               </span>
               </div>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima quo officia tenetur hic facere animi doloremque adipisci, fugiat ratione corrupti eius amet exercitationem dolorem inventore eum et placeat, sunt ducimus.</p>
             </div>
             <a href="#" class="btn btn-primary">Continue Reading</a>
           </article>
+         @endforeach
+         @endforeach
+       
 
-          <article class="blog-entry">
-            <div class="entry-header">
-              <div class="post-thumbnail">
-                <img src="../assets/img/blogs/blog_5.jpg" alt="">
-              </div>
-              <div class="post-date">
-                <h3>20</h3>
-                <span>Feb</span>
-              </div>
-            </div>
-            <div class="post-title"><a href="blog-details.html">Duis feugiat neque sed dolor cursus, sed lacinia nisl pretium</a></div>
-            <div class="entry-meta mb-2">
-              <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
-                </div>
-                by <a href="#">Admin</a>
-              </div>
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-pricetags"></span>
-                </div>
-                Category: 
-                <a href="#">Business</a>, 
-                <a href="#">Finances</a>
-              </div>
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-chatbubble-ellipses"></span>
-                </div>
-                <a href="#">24 Comments</a>
-              </div>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima quo officia tenetur hic facere animi doloremque adipisci, fugiat ratione corrupti eius amet exercitationem dolorem inventore eum et placeat, sunt ducimus.</p>
-            </div>
-            <a href="#" class="btn btn-primary">Continue Reading</a>
-          </article>
+          
+         <div class="col-md-12">
+  <div class="container">
+  <h1>Add Post</h1>
 
-          <article class="blog-entry">
-            <div class="entry-header">
-              <div class="post-thumbnail">
-                <img src="../assets/img/blogs/blog_6.jpg" alt="">
-              </div>
-              <div class="post-date">
-                <h3>06</h3>
-                <span>Jan</span>
-              </div>
+      <form action="{{url('addpost/'.$User->id)}}" method="POST" class="mt-5" enctype="multipart/form-data">
+          @if(Session::has('Post_Added'))
+            <div class="alert alert-success" role="alert">
+              {{ Session::get('Post_Added') }}                   
             </div>
-            <div class="post-title"><a href="blog-details.html">Duis feugiat neque sed dolor cursus, sed lacinia nisl pretium</a></div>
-            <div class="entry-meta mb-2">
-              <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
-                </div>
-                by <a href="#">Admin</a>
-              </div>
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-pricetags"></span>
-                </div>
-                Category: 
-                <a href="#">Business</a>, 
-                <a href="#">Finances</a>
-              </div>
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-chatbubble-ellipses"></span>
-                </div>
-                <a href="#">0 Comments</a>
-              </div>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima quo officia tenetur hic facere animi doloremque adipisci, fugiat ratione corrupti eius amet exercitationem dolorem inventore eum et placeat, sunt ducimus.</p>
-            </div>
-            <a href="#" class="btn btn-primary">Continue Reading</a>
-          </article>
+           @endif
+        
+      {{ csrf_field() }}
+          <div class="form-group wow fadeInUp">
+            <label for="email" class="fw-medium fg-grey">Title</label>
+            <input type="text" class="form-control" name="title" id="email" required="">
+          </div>
+
+          <div class="form-group wow fadeInUp">
+            <label for="message" class="fw-medium fg-grey">Body</label>
+            <textarea rows="6" class="form-control" name="body" id="message" required=""></textarea>
+          </div>
+
+
+          <label for="subject" style="color:blue">Select an Image Here</label>
+            <fieldset>
+              <input  style="color:white; background-color:rgb(24,50,100)" name="file" type="file" class="form-control"  placeholder="..." required="">
+            </fieldset>
+
+          <div class="form-group mt-4 wow fadeInUp">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </form>
+    </div>
+</div>
+<hr>
+
+
+
+
+
+
         </div>
         <!-- Sidebar -->
         <div class="col-lg-4 py-3">

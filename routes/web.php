@@ -17,12 +17,21 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', 'ProductController@index')->name('home');
-Route::get('/addpost', 'ProductController@AddPost')->name('addpost');
-Route::get('/addcomment', 'ProductController@AddComment')->name('addcomment');
-// Route::get('/blog', 'ProductController@Blog');
-Route::get('/auth', 'ProductController@authenticate')->name('auth');
-Route::get('/admin', 'ProductController@Admin')->name('admin');
+Route::get('/', 'ProductController@index')->name('index');//in use
+Route::post('/adduser', 'ProductController@AddUser')->name('adduser');//in use
+Route::post('/addcomment/{id}', 'ProductController@AddComment');//in use
+Route::get('/getuserpostcomment', 'ProductController@getPostByUser')->name('getuserpostcomment');
+
+Route::get('/getcomment/{id}', 'ProductController@getCommentByPost');//in use
+
+Route::get('/Signin', 'ProductController@SignIn')->name('Signin');// in use
+Route::get('/Signup', 'ProductController@SignUp')->name('Signup'); //in use
+Route::post('/addpost/{id}', 'ProductController@AddPost');//in use
+Route::get('/auth', 'ProductController@authenticate')->name('auth');//in use
+//Route::get('/admin', 'ProductController@Admin')->name('admin');
+Route::get('/logout', 'ProductController@Logout')->name('logout');//in use
+
+
 // Route::post('/updatecoverpage', 'ProductController@UpdateCoverPage')->name('updatecoverpage');
 // Route::get('/deletcoverpageimg/{id}', 'ProductController@DeletCoverPageImg');
 // Route::post('/updatecollections', 'ProductController@UpdateCollections')->name('updatecollections');

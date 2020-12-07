@@ -15,6 +15,10 @@ class Post extends Model
     protected $table = "posts";
 
     public function comments(){
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(com::class);
+    }
+
+    public function users(){
+        return $this->belongsTo(User::class);
     }
 }
