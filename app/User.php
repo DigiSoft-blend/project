@@ -40,5 +40,17 @@ class User extends Authenticatable
     public function post(){
         return $this->hasMany(Post::class);
     }
+
+
+    // public function usercomments(){
+    //     return $this->hasManyThrough(
+    //         com::class,
+    //         Post::class,
+    //         'user_id', //Foreign Key on Post Table
+    //         'post_id', //Foreign Key on Comments Table
+    //         'id', //Local key on user table
+    //         'id' //Local key on post table
+    //     );
+    // }
     
 }

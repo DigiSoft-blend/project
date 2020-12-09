@@ -38,27 +38,11 @@
   
     <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="index.html">Homepage 1</a>
-            <a class="dropdown-item" href="index-2.html">Homepage 2</a>
-          </div>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('logout') }}">Sign Out</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="about.html">About</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="blog.html">Blog</a>
-        </li>
-        <li class="nav-item active">
           <a class="nav-link" href="{{ route('Signin') }}">Sign In</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="blog.html">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="updates.html">What's New</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="contact.html">Contact</a>
@@ -73,17 +57,28 @@
 
 <main>
   <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
-    <div class="hero-caption">
+  
+  
+  <div class="hero-caption">
       <div class="container fg-white h-100">
-        <div class="row justify-content-center align-items-center text-center h-100">
+        <div class="row justify-content-center align-items-center  h-100">
           <div class="col-lg-6">
-            <h3 class="mb-4 fw-medium">Blog</h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb breadcrumb-dark justify-content-center bg-transparent">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Blog</li>
-              </ol>
-            </nav>
+           
+          @foreach($user as $User)
+  <div class="comment-area">
+            <ul class="comment-list">
+              <li class="comment">
+                <div class="vcard bio">
+                <img src="{{ asset('postimg') }}/{{ $User->profileimage }}" alt="Image placeholder">
+                </div>
+                <div class="comment-body">
+                <h3>{{ $User->name }}</h3>
+                <div class="meta">January 9, 2018 at 2:21pm</div>
+                <p><a  class="reply" href="{{ route('getuserpostcomment') }}" style="color:black; text-decoration:none">View Your Post</a></p>
+                </div>
+              </li>
+            </div>
+     @endforeach
           </div>
         </div>
       </div>
@@ -95,17 +90,7 @@
       <div class="row">
         <div class="col-lg-8 py-3">
 
-        @foreach($user as $User)
-        <!-- Comments -->
-        
-        
-        <h3>{{ $User->id }}</h3>
-        <h3>{{ $User->name }}</h3>
-
-        
-        <a href="{{ route('getuserpostcomment') }}" style="color:black; text-decoration:none">View Your Post</a> 
-
-        @endforeach
+       
 
         @foreach( $userpost as $user)
          @foreach($user->post as $Post)

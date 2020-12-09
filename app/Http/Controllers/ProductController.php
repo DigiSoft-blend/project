@@ -31,7 +31,7 @@ class ProductController extends Controller
       $password = $request->password;
       $image = $request->file('file');
       $imageName = time().'.'.$image->extension();
-      $image->move(public_path('postimg'), $imageName);
+      $image->move(public_path('profileimg'), $imageName);
       
       try {
       $user = new User();
@@ -74,14 +74,33 @@ public function AddComment(Request $request, $id){
 $post = Post::find($id);
 $comment = new com();
 $comment->comment = $request->message;
+$User = Auth::User();
+$user_id = $User->id;
+$user_name = $User->name;
+$user_email = $User->email;
+$user_profileimage = $User->profileimage;
+$comment->user_id = $user_id; 
+$comment->user_name = $user_name;
+$comment->user_email = $user_email;
+$comment->user_profileimage = $user_profileimage;
 $post->comments()->save($comment);
  return back()->with('Comment_Added', 'Your Comment Has Been Added');
 }
 
-public function getCommentByPost(Request $request, $id){
-$Post = Post::find($id);
-return view('Blog.getcomment' ,compact('Post','User'));
+public function getCommentByPost($id){
+  $Post = Post::find($id);
+  $user_id = $Post->user_id;
+  $user = User::find($user_id);
+  return view('Blog.getcomment' ,compact('Post','user'));
+  //dd($User);
 }
+
+public function show(User $user){
+  $comment = $user->usercomments()->get();
+  dd($comment);
+}
+
+
 
 //Auth User view all his post and comments
 public function getPostByUser(){
@@ -89,7 +108,7 @@ public function getPostByUser(){
   $id = $User->id;
   $user = User::find($id);
   $Post = $user->post;
-  return view('Blog.getpost' ,compact('Post'));
+  return view('Blog.getpost' ,compact('Post','user'));
   }
 
 public function SignIn(){

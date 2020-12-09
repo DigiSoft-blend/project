@@ -112,7 +112,7 @@
                 <div class="icon">
                   <span class="mai-person"></span>  
                 </div>
-                by <span>Admin</span>
+                by <span>{{ $user->name }}</span>
               </div>
               
               <div class="meta-item">
@@ -153,7 +153,7 @@
                   @foreach($Post->comments as $comments)
 
                   <div class="col-md-7 entry-content">  
-                    <p class="mycomment">{{ $comments->comment }}</p>
+                  <span><img class="profilepic" src="{{ asset('postimg') }}/{{ $comments->user_profileimage }}" alt=""><span class="mycomment"> {{ $comments->comment }} </span></span>
                   </div>
 
                  
@@ -163,7 +163,7 @@
                 <div class="icon">
                   <span class="mai-person"></span>  
                 </div>
-                     by <a href="#">Admin</a>
+                     by <span>{{ $comments->user_name }}</span>
                 </div>
 
               <div class="meta-item">

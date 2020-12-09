@@ -23,6 +23,7 @@ Route::post('/addcomment/{id}', 'ProductController@AddComment');//in use
 Route::get('/getuserpostcomment', 'ProductController@getPostByUser')->name('getuserpostcomment');
 
 Route::get('/getcomment/{id}', 'ProductController@getCommentByPost');//in use
+Route::get('/Show/{user}', 'ProductController@show');//in use
 
 Route::get('/Signin', 'ProductController@SignIn')->name('Signin');// in use
 Route::get('/Signup', 'ProductController@SignUp')->name('Signup'); //in use

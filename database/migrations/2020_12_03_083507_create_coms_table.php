@@ -17,6 +17,10 @@ class CreateComsTable extends Migration
             $table->id();
             $table->string('comment');
             $table->bigInteger('post_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('user_name');
+            $table->string('user_email');
+            $table->string('user_profileimage');
             $table->timestamps();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });

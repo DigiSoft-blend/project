@@ -8,6 +8,11 @@
     border-radius: 10px;
   }
 
+  .row{
+    padding: 0;
+    margin: 0;
+  }
+
   .alert-box{
     border: 1px solid blue;
     padding: 10px;
@@ -40,6 +45,20 @@
    
   }
 
+  .mycomment2{
+    background-color:white; 
+    /* background: linear-gradient(to left, rgba(207, 11, 207, 0.733), rgba(197, 12, 243, 0.623),rgba(243, 12, 174, 0.603),rgba(8, 8, 226, 0.336)); */
+    margin:10px;color:black;
+    border-radius:20px;
+    box-shadow: 0px 2px 2px 0px gray;
+    padding: 10px;
+    width: fit-content;
+    height: 100px;
+    margin: 10px;
+   
+  }
+
+
   .combox-footer{
     /* background-color: rgb(226, 228, 231) ; */
     /* box-shadow: 0px 0px 2px 0px gray; */
@@ -57,7 +76,57 @@
   }
 
   .profilepic{
-    width: 60px;
-    height: 60px; 
+    width: 40px;
+    height: 40px; 
     border-radius: 30px;
+  }
+
+  .profilepic1{
+    width: 80px;
+    height: 80px; 
+    border-radius: 80px;
+  }
+
+  .profilepic2{
+    width: 300px;
+    height: 300px; 
+    border-radius: 300px;
+  }
+
+
+  .post-id{
+    font-weight: bolder;
+  }
+
+  .username-con{
+    color:white;
+    padding-left:15px;
+    padding-top:100px;
+    font-size:30px;
+  }
+
+  .username{
+    padding:10px;
+    border-radius:50px;
+  }
+
+  @media (max-width: 731px){
+    .username-con{
+      color:white;
+      font-size:30px;
+      margin-left: 89px;
+      position: relative;
+      bottom: 60px;
+    }
+
+    .username{
+      border-radius:50px;
+    }
+
+    .profilepic2{
+      width: 30px;
+      height: 30px; 
+      border-radius: 30px;
+    }
+  
   }

@@ -71,14 +71,20 @@
         </div>
       </div>
     </div> -->
-  
-
+  <br>
   <div class="page-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 py-3">
-        <h1 style="color:whitesmoke; background-color: rgb(10, 10, 68); border-radius:50px; padding:20px; text-align:center">Comments</h1>
         
+        
+                <div class="row">
+                  <!-- <span class="mai-person"></span>   -->
+                  <div class="col-md-2" ><img class="profilepic1" src="{{ asset('postimg') }}/{{ $user->profileimage }}" alt=""></div>
+                  <div class="col-md-9" style="color:white;padding-left:15px;padding-top:15px;font-size:30px"><span>{{ $user->name }}</span></div> 
+                </div>
+            
+              
       
           <article class="blog-entry">
             <div class="entry-header">
@@ -108,12 +114,6 @@
               <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
               
               <div class="entry-meta mb-2" style="text-align:center">
-              <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
-                </div>
-                by <span>Admin</span>
-              </div>
               
               <div class="meta-item">
                 <div class="icon">
@@ -144,26 +144,23 @@
               <div class="accordion-content">
                 <p>Comments</p><hr>
                 
-                 
-
-                 
-
                 <div class="col-md-12 comboxinternal">
-       
-                  @foreach($Post->comments as $comments)
-
-                  <div class="col-md-7 entry-content">  
-                    <p class="mycomment">{{ $comments->comment }}</p>
+                 
+                 @foreach($Post->comments as $com)
+                   
+                  <div class="col-md-12 entry-content">  
+                    <div class="row">
+                      <div class="col-md-1" style="padding:16px"><img class="profilepic" src="{{ asset('postimg') }}/{{ $com->user_profileimage }}" alt=""></div>
+                      <div class="col-md-11">
+                      <div class="container mycomment" >
+                        <div class="post-id">{{ $com->user_name }}</div>
+                        <div>{{ $com->comment }}</div>
+                      </div>
+                      </div>
+                    </div>
                   </div>
                 
-              <div class="entry-meta mb-2" style="padding-left:60px">
-                <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
-                </div>
-                     by <a href="#">Admin</a>
-                </div>
-
+              <div class="entry-meta mb-2" style="padding-left:85px">
               <div class="meta-item">
                 <div class="icon">
                  <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
@@ -178,7 +175,7 @@
                 <a href="#">Like</a>
               </div>
             </div>
-         @endforeach
+        @endforeach
          </div>   
 
       <form action="{{url('addcomment/'.$Post->id)}}" method="POST" class="mt-5">
