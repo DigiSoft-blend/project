@@ -71,7 +71,7 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
+  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../coverimg/banner2.png);">
     <div class="hero-caption">
       <div class="container fg-white h-100">
         <div class="row justify-content-center align-items-center text-center h-100">

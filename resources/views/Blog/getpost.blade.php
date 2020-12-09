@@ -28,7 +28,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-floating">
-  <div class="container">
+  <div class="container" style="padding:10px; background: linear-gradient(to bottom right, #3D58F3, #9548F9);border-radius:10px">
     <!-- <a class="navbar-brand" href="index.html">
       <img src="../assets/favicon-light.png" alt="" width="40">
     </a> -->
@@ -55,31 +55,38 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
-    <!-- <div class="hero-caption">
-      <div class="container fg-white h-100">
-        <div class="row justify-content-center align-items-center text-center h-100">
-          <div class="col-lg-6">
-            <h3 class="mb-4 fw-medium">Comments</h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb breadcrumb-dark justify-content-center bg-transparent">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Blog</li>
-              </ol>
-            </nav>
-          </div>
+<div class="row">
+  <div class="container">
+         <div class="col-md-12">
+           <div class="comment-area com-area">
+              <ul class="comment-list">
+              <li class="comment" style="margin-top:40px">
+                <div class="vcard bio prof-img5">
+                <img src="{{ asset('profileimg') }}/{{ $user->profileimage }}" alt="Image placeholder">
+                </div>
+                <div class="comment-body">
+                <h3 style="color:white"><span class="name"> {{ $user->name }}</span></h3>
+                <hr>
+                @if(Session::has('Post_Deleted'))
+                 <div class="webchat" role="alert" style="text-align:center">
+                  {{ Session::get('Post_Deleted') }}
+                 </div>
+                 @endif
+                <span><a class="link" href="{{ route('getuserpostcomment') }}" style="text-decoration:none; color:beige">Contact {{ $user->name }} </a></span>
+              </div>
+              </li>
+              </ul>
+            </div>
+        </div>
         </div>
       </div>
-    </div> -->
-  
 
   <div class="page-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 py-3">
-        <h1 style="color:whitesmoke; background-color: rgb(10, 10, 68); border-radius:50px; padding:20px; text-align:center">Comments</h1>
-        
-       @foreach($Post as $Post)
+       
+            @foreach($Post as $Post)
           <article class="blog-entry">
             <div class="entry-header">
               <div class="post-thumbnail">
@@ -94,26 +101,21 @@
                         <div class="entry-content">
               <p>{{ $Post->body }}</p>
             </div>
-            <a href="#" class="btn btn-primary">Continue Reading</a>
+            <a href="#" class="btn btn-primary rounded-pill">Continue Reading</a>
+           
+          <a style="display:flex; float:right" class="btn btn-danger rounded-pill" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Actions</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding:5px; border-radius:20px">
+            <a class="dropdown-item active rounded-pill" href="#">Edit Post</a>
+            <a class="dropdown-item  rounded-pill" href="/deletpost/{{ $Post->id }}" style="margin-top:2px">Delete Post</a>
+          </div>
+       
           </article>
         
          
 
 
 
-        <div class="col-md-12 mycombox wow fadeInLeft">
-          <div class="accordion accordion-gap" id="accordionFAQ">
-          <div class="accordion-item wow fadeInRight">
-            <div class="accordion-trigger" id="headingFour">
-              <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-              
-              <div class="entry-meta mb-2" style="text-align:center">
-              <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
-                </div>
-                by <span>{{ $user->name }}</span>
-              </div>
+          <div class="entry-meta mb-2" style="text-align:center">
               
               <div class="meta-item">
                 <div class="icon">
@@ -135,86 +137,80 @@
                 </div> 
                <span>Like</span>
               </div>
-            </div>
-          </button>
-        </div>
+            </div>   
+
+              <hr>
+
+
+
        
+          
+     <div class="col-md-12 comboxinternal">
+     
 
-            <div id="collapse1" class="collapse" aria-labelledby="headingFour" data-parent="#accordionFAQ">
-              <div class="accordion-content">
-                <p>Comments</p><hr>
-                
-                 
-
-                 
-
-                <div class="col-md-12 comboxinternal">
-       
-                  @foreach($Post->comments as $comments)
-
-                  <div class="col-md-7 entry-content">  
-                  <span><img class="profilepic" src="{{ asset('postimg') }}/{{ $comments->user_profileimage }}" alt=""><span class="mycomment"> {{ $comments->comment }} </span></span>
+                 @foreach($Post->comments as $com)
+                    
+                      <div class="row" style="margin:0; padding:0">
+                        <div class="col-md-1" style="padding-top:16px;"><img class="profilepic" src="{{ asset('profileimg') }}/{{ $com->user_profileimage }}" alt=""></div>
+                        <div class="col-md-11">
+                        <div class="container mycomment" >
+                          <div class="post-id">{{ $com->user_name }}</div>
+                          <div>{{ $com->comment }}</div>
+          @if( $com->user_name  == $user->name )                
+          <a style="display:flex; float:right" class="btn btn-danger rounded-pill" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Actions</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding:5px; border-radius:20px">
+            <a class="dropdown-item active rounded-pill" href="#">Edit Post</a>
+            <a class="dropdown-item  rounded-pill" href="" style="margin-top:2px">Delete Post</a>
+          </div>
+          @endif
+                        </div>
+                        </div>
+                      </div>
+                   
+                  
+                <div class="entry-meta mb-2" style="padding-left:85px">
+                <div class="meta-item">
+                  <div class="icon">
+                   <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
                   </div>
-
-                 
-                
-              <div class="entry-meta mb-2" style="padding-left:60px">
-                <div class="meta-item entry-author">
-                <div class="icon">
-                  <span class="mai-person"></span>  
+                  <a href="#">Reply</a>
                 </div>
-                     by <span>{{ $comments->user_name }}</span>
+  
+                <div class="meta-item">
+                  <div class="icon">
+                    <span class="fa fa-smile"></span>
+                  </div>
+                  <a href="#">Like</a>
                 </div>
-
-              <div class="meta-item">
-                <div class="icon">
-                 <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
-                </div>
-                <a href="#">Reply</a>
               </div>
-
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="fa fa-smile"></span>
-                </div>
-                <a href="#">Like</a>
+          @endforeach
+           </div>   
+  
+        <form action="{{url('addcomment/'.$Post->id)}}" method="POST" class="mt-5">
+            @if(Session::has('Comment_Added'))
+              <div class="alert alert-success" role="alert">
+                {{ Session::get('Comment_Added') }}
               </div>
+             @endif
+          {{ csrf_field() }}
+            <div class="combox-footer">
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
             </div>
-         @endforeach
-         </div>   
-
-      <form action="{{url('addcomment/'.$Post->id)}}" method="POST" class="mt-5">
-          @if(Session::has('Comment_Added'))
-            <div class="alert alert-success" role="alert">
-              {{ Session::get('Comment_Added') }}
+  
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary rounded-pill">Upload</button>
             </div>
-           @endif
-        {{ csrf_field() }}
-          <div class="combox-footer">
-          <div class="form-group">
-            <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
-          </div>
-
-          <div class="form-group mt-4">
-            <button type="submit" class="btn btn-block rounded-pill">Upload</button>
-          </div>
-          </div>
-        </form>
- 
-
-              </div>
             </div>
-          </div>
-        </div>
-     </div>
+          </form>
+        
           
      @endforeach
 
-
-
-
- 
         </div>
+       
+
+       
         <!-- Sidebar -->
         <div class="col-lg-4 py-3">
           <div class="widget-wrap">

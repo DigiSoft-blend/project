@@ -10,7 +10,7 @@
 
   <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
 
-  <title>Mobster - One page app template</title>
+  <title>Silas Udofias Enterprise</title>
 
   <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
 
@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
 
   <link rel="stylesheet" href="../assets/css/mobster.css">
+  <link rel="stylesheet" href="../assets/css/mystyle.css">
 </head>
 <body>
 
@@ -57,13 +58,14 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
+  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../coverimg/banner2.png);">
+  <br><br>
     <div class="hero-caption">
       <div class="container fg-white h-100">
         <div class="row justify-content-center align-items-center text-center h-100">
           <div class="col-lg-6">
-            <h3 class="mb-4 fw-medium">Welcome To My WebChat</h3>
-            <p> <a class="btn btn-primary rounded-pill" href="{{ route('Signin') }}">Sign in to be  a participant</a></p>
+            <h3 class="mb-4 fw-medium">Welcome to <span class="webchat" >WebChat</span></h3>
+            <p> <a class="btn btn-primary rounded-pill" href="{{ route('Signin') }}">Sign in as participant</a></p>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-dark justify-content-center bg-transparent">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -113,7 +115,7 @@
               </div>
               <div class="meta-item">
                 <div class="icon">
-                 <a href="{{ route('Signin')}}" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
+                 <a href="{{ route('Signin') }}" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
                 
                 </div>
                 <span>{{$Post->comments()->count()}} 
@@ -125,7 +127,7 @@
                </span>
               </div>
             </div>
-            <a href="#" class="btn btn-primary">Continue Reading</a>
+            <a href="/continue-reading/{{ $Post->id }}" class="btn btn-primary">Continue Reading</a>
           </article>
          @endforeach
          @endforeach

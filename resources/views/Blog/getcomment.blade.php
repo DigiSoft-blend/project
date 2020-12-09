@@ -25,10 +25,11 @@
   <link rel="stylesheet" href="../assets/css/mobster.css">
   <link rel="stylesheet" href="../assets/css/mystyle.css">
 </head>
+
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-floating">
-  <div class="container">
+  <div class="container" style="padding:10px; background: linear-gradient(to bottom right, #3D58F3, #9548F9);border-radius:10px">
     <!-- <a class="navbar-brand" href="index.html">
       <img src="../assets/favicon-light.png" alt="" width="40">
     </a> -->
@@ -54,37 +55,35 @@
   </div>
 </nav>
 
-<main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
-    <!-- <div class="hero-caption">
-      <div class="container fg-white h-100">
-        <div class="row justify-content-center align-items-center text-center h-100">
-          <div class="col-lg-6">
-            <h3 class="mb-4 fw-medium">Comments</h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb breadcrumb-dark justify-content-center bg-transparent">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Blog</li>
-              </ol>
-            </nav>
-          </div>
+<main>      
+  <div class="row">
+  <div class="container">
+         <div class="col-md-12">
+           <div class="comment-area com-area">
+              <ul class="comment-list">
+              <li class="comment" style="margin-top:40px">
+                <div class="vcard bio prof-img5">
+                <img src="{{ asset('profileimg') }}/{{ $user->profileimage }}" alt="Image placeholder">
+                </div>
+                <div class="comment-body">
+                <h3 style="color:white">Post by <span class="name"> {{ $user->name }}</span></h3>
+                <hr>
+                <span><a class="link" href="{{ route('getuserpostcomment') }}" style="text-decoration:none; color:beige">Contact {{ $user->name }} </a></span>
+              </div>
+              </li>
+              </ul>
+            </div>
+        </div>
         </div>
       </div>
-    </div> -->
+           
+  
   <br>
   <div class="page-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 py-3">
-        
-        
-                <div class="row">
-                  <!-- <span class="mai-person"></span>   -->
-                  <div class="col-md-2" ><img class="profilepic1" src="{{ asset('postimg') }}/{{ $user->profileimage }}" alt=""></div>
-                  <div class="col-md-9" style="color:white;padding-left:15px;padding-top:15px;font-size:30px"><span>{{ $user->name }}</span></div> 
-                </div>
-            
-              
+       
       
           <article class="blog-entry">
             <div class="entry-header">
@@ -100,20 +99,9 @@
                         <div class="entry-content">
               <p>{{ $Post->body }}</p>
             </div>
-            <a href="#" class="btn btn-primary">Continue Reading</a>
           </article>
         
-         
-
-
-
-        <div class="col-md-12 mycombox wow fadeInLeft">
-          <div class="accordion accordion-gap" id="accordionFAQ">
-          <div class="accordion-item wow fadeInRight">
-            <div class="accordion-trigger" id="headingFour">
-              <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-              
-              <div class="entry-meta mb-2" style="text-align:center">
+          <div class="entry-meta mb-2" style="text-align:center">
               
               <div class="meta-item">
                 <div class="icon">
@@ -135,81 +123,69 @@
                 </div> 
                <span>Like</span>
               </div>
-            </div>
-          </button>
-        </div>
+            </div>   
+
+              <hr>
+
+
+
        
-
-            <div id="collapse1" class="collapse" aria-labelledby="headingFour" data-parent="#accordionFAQ">
-              <div class="accordion-content">
-                <p>Comments</p><hr>
-                
-                <div class="col-md-12 comboxinternal">
-                 
-                 @foreach($Post->comments as $com)
-                   
-                  <div class="col-md-12 entry-content">  
-                    <div class="row">
-                      <div class="col-md-1" style="padding:16px"><img class="profilepic" src="{{ asset('postimg') }}/{{ $com->user_profileimage }}" alt=""></div>
-                      <div class="col-md-11">
-                      <div class="container mycomment" >
-                        <div class="post-id">{{ $com->user_name }}</div>
-                        <div>{{ $com->comment }}</div>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
-                
-              <div class="entry-meta mb-2" style="padding-left:85px">
-              <div class="meta-item">
-                <div class="icon">
-                 <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
-                </div>
-                <a href="#">Reply</a>
-              </div>
-
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="fa fa-smile"></span>
-                </div>
-                <a href="#">Like</a>
-              </div>
-            </div>
-        @endforeach
-         </div>   
-
-      <form action="{{url('addcomment/'.$Post->id)}}" method="POST" class="mt-5">
-          @if(Session::has('Comment_Added'))
-            <div class="alert alert-success" role="alert">
-              {{ Session::get('Comment_Added') }}
-            </div>
-           @endif
-        {{ csrf_field() }}
-          <div class="combox-footer">
-          <div class="form-group">
-            <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
-          </div>
-
-          <div class="form-group mt-4">
-            <button type="submit" class="btn btn-block rounded-pill">Upload</button>
-          </div>
-          </div>
-        </form>
- 
-
-              </div>
-            </div>
-          </div>
-        </div>
-     </div>
           
-    
+     <div class="col-md-12 comboxinternal">
+     
 
-
-
-
- 
+                 @foreach($Post->comments as $com)
+                    
+                      <div class="row">
+                        <div class="col-md-1" style="padding-top:16px;"><img class="profilepic" src="{{ asset('profileimg') }}/{{ $com->user_profileimage }}" alt=""></div>
+                        <div class="col-md-11">
+                        <div class="container mycomment" >
+                          <div class="post-id">{{ $com->user_name }}</div>
+                          <div>{{ $com->comment }}</div>
+                        </div>
+                        </div>
+                      </div>
+                   
+                  
+                <div class="entry-meta mb-2" style="padding-left:85px">
+                <div class="meta-item">
+                  <div class="icon">
+                   <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
+                  </div>
+                  <a href="#">Reply</a>
+                </div>
+  
+                <div class="meta-item">
+                  <div class="icon">
+                    <span class="fa fa-smile"></span>
+                  </div>
+                  <a href="#">Like</a>
+                </div>
+              </div>
+          @endforeach
+           </div>   
+  
+        <form action="{{url('addcomment/'.$Post->id)}}" method="POST" class="mt-5">
+            @if(Session::has('Comment_Added'))
+              <div class="alert alert-success" role="alert">
+                {{ Session::get('Comment_Added') }}
+              </div>
+             @endif
+          {{ csrf_field() }}
+            <div class="combox-footer">
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
+            </div>
+  
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary rounded-pill">Send</button>
+            </div>
+            </div>
+          </form>
+  
         </div>
+
+        
         <!-- Sidebar -->
         <div class="col-lg-4 py-3">
           <div class="widget-wrap">

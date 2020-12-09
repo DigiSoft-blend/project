@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="../assets/css/bootstrap.css">
 
   <link rel="stylesheet" href="../assets/css/mobster.css">
+  <link rel="stylesheet" href="../assets/css/mystyle.css">
 </head>
 <body>
 
@@ -48,15 +49,15 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
-    <div class="hero-caption">
+  <div  style="background-image: url(../coverimg/banner2.png); background-size: cover;background-repeat: no-repeat;background-position: center;padding-top:243px">
+   <div class="hero-caption">
       <div class="container fg-white h-100">
         <div class="row justify-content-center">
           <div class="col-lg-6">
             
-            <br><br><br><br>
+           
 
-<div class="widget-wrap" style="color: blue">
+<div class="widget-wrap" style="color: blue;position:relative;bottom:100px">
  <form  class="search-form"  action="{{route('auth')}}" method="POST" class="mt-5" >
          
       <h3 class="widget-title" style="text-align:center;">Sign in Now</h3>
@@ -103,13 +104,7 @@
     
   </div>
 
-  <div class="page-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 py-3">
-
-        
-        </div>
+ 
        
 <script src="../assets/js/jquery-3.5.1.min.js"></script>
 

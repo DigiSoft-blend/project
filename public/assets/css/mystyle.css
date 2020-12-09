@@ -1,3 +1,47 @@
+body{
+  /* background-image: url("/coverimg/intro-bg.png"); */
+  background:linear-gradient(to bottom right, #ffffff, #758c8f);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.body{
+  /* background-image: url("/coverimg/intro-bg.png"); */
+  background:linear-gradient(to bottom right, #ffffff, #758c8f);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.com-area{
+  position:relative; 
+  top:120px; 
+  background:linear-gradient(to bottom right, #565b75, #0894be);
+  border-radius: 20px;
+  padding-top: 20px;
+}
+.webchat{
+  background:linear-gradient(to bottom right,#758c8f, #ffffff, #758c8f);
+  padding: 6px;
+  border-radius: 20px;
+  color: tomato;
+}
+
+.name{
+  color:  #06cee9;
+}
+
+.prof-img5{
+  margin-left: 60px;
+}
+
+@media(max-width: 700px){
+  .prof-img5{
+    margin-left: 0px;
+  }
+}
+
 .AboutMe-btn{
     position: relative;
     top: 20px;
@@ -8,6 +52,7 @@
     border-radius: 10px;
   }
 
+  
   .row{
     padding: 0;
     margin: 0;
@@ -36,19 +81,20 @@
 
   .mycomment{
     background-color:rgb(230, 228, 228);
-    margin:10px;color:black;
+    margin:10px;
+    color:black;
     border-radius:20px;
     box-shadow: 0px 2px 2px 0px gray;
     padding: 10px;
     width: fit-content;
-    margin: 10px;
+   
    
   }
 
   .mycomment2{
     background-color:white; 
     /* background: linear-gradient(to left, rgba(207, 11, 207, 0.733), rgba(197, 12, 243, 0.623),rgba(243, 12, 174, 0.603),rgba(8, 8, 226, 0.336)); */
-    margin:10px;color:black;
+    color:black;
     border-radius:20px;
     box-shadow: 0px 2px 2px 0px gray;
     padding: 10px;
@@ -67,7 +113,7 @@
   }
 
   .comboxinternal{
-    padding: 10px;
+   
     border-radius: 3px;
     background-color: rgb(253, 252, 252);
     box-shadow: 0px 0px 2px 0px gray;
@@ -127,6 +173,12 @@
       width: 30px;
       height: 30px; 
       border-radius: 30px;
+    }
+
+    .coverimg{
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
   
   }

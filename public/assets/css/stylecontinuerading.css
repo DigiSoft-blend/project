@@ -1,0 +1,7 @@
+body{
+    /* background-image: url("/coverimg/intro-bg.png"); */
+    background:linear-gradient(to bottom right, #ffffff, #046572);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

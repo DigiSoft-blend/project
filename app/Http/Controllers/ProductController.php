@@ -108,7 +108,7 @@ public function getPostByUser(){
   $id = $User->id;
   $user = User::find($id);
   $Post = $user->post;
-  return view('Blog.getpost' ,compact('Post','user'));
+    return view('Blog.getpost' ,compact('Post','user'));
   }
 
 public function SignIn(){
@@ -120,7 +120,33 @@ public function SignUp(){
   echo "hey";
 }
 
+public function Continue_reading($id){
+  $Post = Post::find($id);
+  $user_id = $Post->user_id;
+  $user = User::find($user_id);
+  return view('Blog.continue-reading-post' ,compact('Post','user'));
+}
 
+
+public function DeletPost($id){
+    $Post = Post::find($id);
+    unlink(public_path('postimg').'/'.$Post->image);
+    $Post->delete();
+    return back()->with('Post_Deleted',' Your deleted a post');
+}
+
+public function DeletUser($id){
+  $user = User::find($id); 
+  unlink(public_path('profileimage').'/'.$Post->image);
+  $user->delete();
+  return back()->with('User_Deleted',' Entry deleted successfully');
+}
+
+public function DeletComment($com_id, $id){
+  $comment = com::where('user_id','=', $id , 'AND' ,'id' ,'=',$com_id); 
+  $comment->delete();
+  return back()->with('Comment_Deleted',' Comment deleted');
+}
 
 // public function AddUser(Request $request, $id){
 

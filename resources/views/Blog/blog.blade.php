@@ -56,7 +56,7 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../assets/img/hero_mini.svg);">
+  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../coverimg/intro-bg.png);">
   
   
   <div class="hero-caption">
@@ -65,20 +65,21 @@
           <div class="col-lg-6">
            
           @foreach($user as $User)
-  <div class="comment-area">
+           <div class="comment-area">
             <ul class="comment-list">
               <li class="comment">
                 <div class="vcard bio">
-                <img src="{{ asset('postimg') }}/{{ $User->profileimage }}" alt="Image placeholder">
+                <img src="{{ asset('profileimg') }}/{{ $User->profileimage }}" alt="Image placeholder">
                 </div>
                 <div class="comment-body">
                 <h3>{{ $User->name }}</h3>
                 <div class="meta">January 9, 2018 at 2:21pm</div>
                 <p><a  class="reply" href="{{ route('getuserpostcomment') }}" style="color:black; text-decoration:none">View Your Post</a></p>
+                <span><a  class="reply" href="#addpost" style="color:black; text-decoration:none">Add a Post</a></span>
                 </div>
               </li>
             </div>
-     @endforeach
+         @endforeach
           </div>
         </div>
       </div>
@@ -105,6 +106,9 @@
               </div>
             </div>
             <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
+            <div class="entry-content">
+              <p>{{ $Post->body }}</p>
+            </div>
             <div class="entry-meta mb-2">
               <div class="meta-item entry-author">
                 <div class="icon">
@@ -142,7 +146,7 @@
        
 
           
-         <div class="col-md-12">
+         <div class="col-md-12" id="addpost">
   <div class="container">
   <h1>Add Post</h1>
 

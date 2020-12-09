@@ -22,9 +22,11 @@ Route::post('/adduser', 'ProductController@AddUser')->name('adduser');//in use
 Route::post('/addcomment/{id}', 'ProductController@AddComment');//in use
 Route::get('/getuserpostcomment', 'ProductController@getPostByUser')->name('getuserpostcomment');
 
+Route::get('/deletcomment/{com_id}{id}', 'ProductController@DeletComment');//in use
+Route::get('/deletpost/{id}', 'ProductController@DeletPost');//in use
 Route::get('/getcomment/{id}', 'ProductController@getCommentByPost');//in use
 Route::get('/Show/{user}', 'ProductController@show');//in use
-
+Route::get('/continue-reading/{id}', 'ProductController@Continue_reading')->name('continue-reading');//in use
 Route::get('/Signin', 'ProductController@SignIn')->name('Signin');// in use
 Route::get('/Signup', 'ProductController@SignUp')->name('Signup'); //in use
 Route::post('/addpost/{id}', 'ProductController@AddPost');//in use

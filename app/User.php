@@ -42,15 +42,15 @@ class User extends Authenticatable
     }
 
 
-    // public function usercomments(){
-    //     return $this->hasManyThrough(
-    //         com::class,
-    //         Post::class,
-    //         'user_id', //Foreign Key on Post Table
-    //         'post_id', //Foreign Key on Comments Table
-    //         'id', //Local key on user table
-    //         'id' //Local key on post table
-    //     );
-    // }
+    public function usercomments(){
+        return $this->hasManyThrough(
+            com::class,
+            Post::class,
+            'user_id', //Foreign Key on Post Table
+            'post_id', //Foreign Key on Comments Table
+            'id', //Local key on user table
+            'id' //Local key on post table
+        );
+    }
     
 }
