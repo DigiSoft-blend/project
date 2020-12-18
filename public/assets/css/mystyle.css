@@ -1,6 +1,8 @@
 body{
   /* background-image: url("/coverimg/intro-bg.png"); */
-  background:linear-gradient(to bottom right, #ffffff, #758c8f);
+ /* background:linear-gradient(to bottom right, #4a4a4b, #0b021a); */
+  background-color:  #4a4a4b;
+  color: whitesmoke;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -17,19 +19,34 @@ body{
 .com-area{
   position:relative; 
   top:120px; 
-  background:linear-gradient(to bottom right, #565b75, #0894be);
-  border-radius: 20px;
+  /* background:linear-gradient(to bottom right, #565b75, #0894be); */
+  background-image: url("/coverimg/intro-bg.png");
+  border-radius: 6px;
+  box-shadow: 0px 5px 10px 0px black;
   padding-top: 20px;
 }
 .webchat{
   background:linear-gradient(to bottom right,#758c8f, #ffffff, #758c8f);
   padding: 6px;
   border-radius: 20px;
-  color: tomato;
+  color: black;
 }
 
 .name{
   color:  #06cee9;
+}
+
+.edit-profile{
+  color:black; 
+  text-decoration:none;
+}
+
+
+@media(max-width: 700px){
+  .edit-profile{
+    position:relative; 
+    top:10px;
+  }
 }
 
 .prof-img5{

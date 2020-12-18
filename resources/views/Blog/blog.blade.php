@@ -10,6 +10,8 @@
 
   <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
 
+  <meta name="_token" content="{{csrf_token()}}" >
+
   <title>Mobster - One page app template</title>
 
   <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
@@ -75,7 +77,8 @@
                 <h3>{{ $User->name }}</h3>
                 <div class="meta">January 9, 2018 at 2:21pm</div>
                 <p><a  class="reply" href="{{ route('getuserpostcomment') }}" style="color:black; text-decoration:none">View Your Post</a></p>
-                <span><a  class="reply" href="#addpost" style="color:black; text-decoration:none">Add a Post</a></span>
+                <span><a  class="reply" href="#addpost" style="color:black; text-decoration:none;">Add a Post</a></span>
+                <span><a  class="reply edit-profile" href="{{ route('edituserprofile') }}">Edit Profile</a></span>
                 </div>
               </li>
             </div>
@@ -95,19 +98,19 @@
 
         @foreach( $userpost as $user)
          @foreach($user->post as $Post)
-            <article class="blog-entry">
-            <div class="entry-header">
+            <article class="blog-entry" id="preview">
+            <div class="entry-header" id='mypost'>
               <div class="post-thumbnail">
-                <img src="{{ asset('postimg') }}/{{ $Post->image }}" alt="">
+                <img id="img" src="{{ asset('postimg') }}/{{ $Post->image }}" alt="">
               </div>
               <div class="post-date">
                 <h3>20</h3>
                 <span>Feb</span>
               </div>
             </div>
-            <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
+            <div class="post-title"><a href="blog-details.html" id="title" >{{ $Post->title }}</a></div>
             <div class="entry-content">
-              <p>{{ $Post->body }}</p>
+              <p id="body" >{{ $Post->body }}</p>
             </div>
             <div class="entry-meta mb-2">
               <div class="meta-item entry-author">
@@ -150,28 +153,22 @@
   <div class="container">
   <h1>Add Post</h1>
 
-      <form action="{{url('addpost/'.$User->id)}}" method="POST" class="mt-5" enctype="multipart/form-data">
-          @if(Session::has('Post_Added'))
-            <div class="alert alert-success" role="alert">
-              {{ Session::get('Post_Added') }}                   
-            </div>
-           @endif
-        
-      {{ csrf_field() }}
+      <form  id="postForm" class="mt-5" enctype="multipart/form-data">
+      @csrf
           <div class="form-group wow fadeInUp">
             <label for="email" class="fw-medium fg-grey">Title</label>
-            <input type="text" class="form-control" name="title" id="email" required="">
+            <input type="text" class="form-control" name="title" id="title" required="">
           </div>
 
           <div class="form-group wow fadeInUp">
             <label for="message" class="fw-medium fg-grey">Body</label>
-            <textarea rows="6" class="form-control" name="body" id="message" required=""></textarea>
+            <textarea rows="6" class="form-control" name="body" id="body" required=""></textarea>
           </div>
 
 
           <label for="subject" style="color:blue">Select an Image Here</label>
             <fieldset>
-              <input  style="color:white; background-color:rgb(24,50,100)" name="file" type="file" class="form-control"  placeholder="..." required="">
+              <input  style="color:white; background-color:rgb(24,50,100)" name="file" id="image" type="file" class="form-control"  placeholder="..." required="">
             </fieldset>
 
           <div class="form-group mt-4 wow fadeInUp">
@@ -356,7 +353,10 @@
   </div>
 </footer> <!-- .page-footer -->
 
-<script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+
+
+<script src="../assets/js/jquery.js"></script>
 
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 
@@ -365,6 +365,33 @@
 <script src="../assets/vendor/wow/wow.min.js"></script>
 
 <script src="../assets/js/mobster.js"></script>
+
+<script>
+$("#postForm").submit(function(e){
+  e.preventDefault();
+  let formData = new FormData(this);
+  $.ajax({
+    headers:{
+       'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+     },
+    url: "{{ route('addpost') }}",
+    type:"POST",
+    contentType: false,
+    processData: false,
+    data:formData,
+    success:function(response){
+     
+     if(response){
+      alert('Data Updated')
+      location.reload();
+     } 
+    },
+    error: function(response, textStatus, errorThrown){
+       console.log(response);
+     },
+  });
+});
+</script>
 
 </body>
 </html>

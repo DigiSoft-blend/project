@@ -37,27 +37,9 @@
     </button>
   
     <div class="collapse navbar-collapse" id="navbarToggler">
-      <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="index.html">Homepage 1</a>
-            <a class="dropdown-item" href="index-2.html">Homepage 2</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about.html">About</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="blog.html">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="updates.html">What's New</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact.html">Contact</a>
-        </li>
-      </ul>
+      <div>
+       <a class="nav-link" href="{{ route('auth') }}" style="color:white;text-decoration:none;">Back</a>
+      </div>
       <div class="ml-auto my-2 my-lg-0">
         <button class="btn btn-primary rounded-pill">Download Now</button>
       </div>
@@ -74,14 +56,14 @@
           <br><br><br>
   
        <div class="widget-wrap" style="color: blue">
-        <form  class="search-form"  action="{{ route('adduser') }}" method="POST" class="mt-5" enctype="multipart/form-data">
-        <h3 class="widget-title">Sign Up Now</h3>
+        <form  class="search-form"  action="updateuser/{{ $user->id }}" method="POST" class="mt-5" enctype="multipart/form-data">
+        <h3 class="widget-title">Edit Your Profile</h3>
           
-           @if(Session::has('User_Added'))
+           @if(Session::has('User_Updated'))
             <div class="alert alert-success" role="alert">
-              {{ Session::get('User_Added') }}                   
+              {{ Session::get('User_Updated') }}                   
             </div>
-           @endif
+           @endif 
            @if(Session::has('User_Exist'))
             <div class="alert alert-success" role="alert">
               {{ Session::get('User_Exist') }}                   

@@ -18,20 +18,29 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', 'ProductController@index')->name('index');//in use
+Route::get('/addlike/{id}', 'ProductController@AddLike');//in use
 Route::post('/adduser', 'ProductController@AddUser')->name('adduser');//in use
-Route::post('/addcomment/{id}', 'ProductController@AddComment');//in use
-Route::get('/getuserpostcomment', 'ProductController@getPostByUser')->name('getuserpostcomment');
 
-Route::get('/deletcomment/{com_id}{id}', 'ProductController@DeletComment');//in use
+//Route::post('/addp', 'ProductController@addp')->name('addp');//in use
+
+Route::post('/addcomment/{id}', 'ProductController@AddComment');//in use
+Route::get('/userpost/{id}', 'ProductController@UserPost');//in use
+Route::get('/getuserpostcomment', 'ProductController@getPostByUser')->name('getuserpostcomment');
+Route::post('/updatepost/{id}', 'ProductController@UpdatePost');//in use
+Route::post('/updateuser/{id}', 'ProductController@UpdateUser');//in use
+Route::get('/editpost/{id}', 'ProductController@EditPost');//in use
 Route::get('/deletpost/{id}', 'ProductController@DeletPost');//in use
+Route::get('/editcomment/{id}', 'ProductController@EditComment');//in use
+Route::get('/deletcomment/{id}', 'ProductController@DeletComment');//in use
+Route::post('/updatecomment/{id}', 'ProductController@UpdateComment');//in use
 Route::get('/getcomment/{id}', 'ProductController@getCommentByPost');//in use
 Route::get('/Show/{user}', 'ProductController@show');//in use
 Route::get('/continue-reading/{id}', 'ProductController@Continue_reading')->name('continue-reading');//in use
 Route::get('/Signin', 'ProductController@SignIn')->name('Signin');// in use
 Route::get('/Signup', 'ProductController@SignUp')->name('Signup'); //in use
-Route::post('/addpost/{id}', 'ProductController@AddPost');//in use
+Route::get('/edituserprofile', 'ProductController@EditUser')->name('edituserprofile');// in use
+Route::post('/addpost', 'ProductController@AddPost')->name('addpost');//in use
 Route::get('/auth', 'ProductController@authenticate')->name('auth');//in use
-//Route::get('/admin', 'ProductController@Admin')->name('admin');
 Route::get('/logout', 'ProductController@Logout')->name('logout');//in use
 
 

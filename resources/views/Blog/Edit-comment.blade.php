@@ -10,7 +10,7 @@
 
   <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
 
-  <meta name="_token" content="{{csrf_token()}}" >
+  <meta name="_token" content="{{ csrf_token() }}">
 
   <title>Mobster - One page app template</title>
 
@@ -43,7 +43,7 @@
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
         
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('auth') }}">Back</a>
+          <a class="nav-link" href="/userpost/{{ $Post->id }}">Back</a>
         </li>
 
         <li class="nav-item">
@@ -58,26 +58,7 @@
 </nav>
 
 <main>      
-  <div class="row">
-  <div class="container">
-         <div class="col-md-12">
-           <div class="comment-area com-area">
-              <ul class="comment-list">
-              <li class="comment" style="margin-top:40px">
-                <div class="vcard bio prof-img5">
-                <img src="{{ asset('profileimg') }}/{{ $user->profileimage }}" alt="Image placeholder">
-                </div>
-                <div class="comment-body">
-                <h3 style="color:white">Post by <span class="name"> {{ $user->name }}</span></h3>
-                <hr>
-                <span><a class="link" href="{{ route('getuserpostcomment') }}" style="text-decoration:none; color:beige">Contact {{ $user->name }} </a></span>
-              </div>
-              </li>
-              </ul>
-            </div>
-        </div>
-        </div>
-      </div>
+  
            
   
   <br>
@@ -87,96 +68,13 @@
         <div class="col-lg-8 py-3">
        
       
-          <article class="blog-entry">
-            <div class="entry-header">
-              <div class="post-thumbnail">
-                <img src="{{ asset('postimg') }}/{{ $Post->image }}" alt="">
-              </div>
-              <div class="post-date">
-                <h3>20</h3>
-                <span>Feb</span>
-              </div>
-            </div>
-            <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
-                        <div class="entry-content">
-              <p>{{ $Post->body }}</p>
-            </div>
-          </article>
-        
-          <div class="entry-meta mb-2" style="text-align:center">
-              
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-chatbubble-ellipses"></span>
-                </div>
-               
-                <span>{{$Post->comments->count()}} 
-                    @if($Post->comments->count() > 1)
-                     Comments
-                    @else
-                     Comment
-                    @endif
-                </span>
-               
-              </div>
-              <div class="meta-item">
-                <div class="icon">
-                  <span class="mai-pricetags"></span>
-                </div> 
-               <span>Like</span>
-              </div>
-            </div>   
-
-              <hr>
-
-
-
-       
           
-     <div class="col-md-12 comboxinternal">
-     
 
-                 @foreach($Post->comments as $com)
-                    
-                      <div class="row">
-                        <div class="col-md-1" style="padding-top:16px;"><img class="profilepic" src="{{ asset('profileimg') }}/{{ $com->user_profileimage }}" alt=""></div>
-                        <div class="col-md-11">
-                        <div class="container mycomment" >
-                          <div class="post-id">{{ $com->user_name }}</div>
-                          <div>{{ $com->comment }}</div>
-                        </div>
-                        </div>
-                      </div>
-                   
-                  
-                <div class="entry-meta mb-2" style="padding-left:85px">
-                <div class="meta-item">
-                  <div class="icon">
-                   <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
-                  </div>
-                  <a href="#">Reply</a>
-                </div>
-  
-                <div class="meta-item">
-                  <div class="icon">
-                    <span class="fa fa-smile"></span>
-                  </div>
-                  <a href="#">Like</a>
-                </div>
-              </div>
-          @endforeach
-           </div>   
-  
-        <form id="commentsForm" class="mt-5">
-            @if(Session::has('Comment_Added'))
-              <div class="alert alert-success" role="alert">
-                {{ Session::get('Comment_Added') }}
-              </div>
-             @endif
-          {{ csrf_field() }}
+        <form  id="comment" class="mt-5">
+           @csrf
             <div class="combox-footer">
             <div class="form-group">
-              <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
+              <input type="text" class="form-control rounded-pill" name="message" value="{{ $comment->comment }}" id="message" placeholder="What do you think ?" required="">
             </div>
   
             <div class="form-group mt-4">
@@ -293,14 +191,14 @@
 <script src="../assets/js/mobster.js"></script>
 
 <script>
-$("#commentsForm").submit(function(e){
+$("#comment").submit(function(e){
   e.preventDefault();
   let formData = new FormData(this);
   $.ajax({
     headers:{
        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
      },
-    url: "{{url('addcomment/'.$Post->id)}}",
+    url: "/updatecomment/{{ $comment->id }}",
     type:"POST",
     contentType: false,
     processData: false,
@@ -318,7 +216,6 @@ $("#commentsForm").submit(function(e){
   });
 });
 </script>
-
 
 </body>
 </html>

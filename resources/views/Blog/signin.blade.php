@@ -49,7 +49,7 @@
 </nav>
 
 <main>
-  <div  style="background-image: url(../coverimg/banner2.png); background-size: cover;background-repeat: no-repeat;background-position: center;padding-top:243px">
+  <div  style="background-image: url(../coverimg/intro-bg.png); background-size: cover;background-repeat: no-repeat;background-position: center;padding-top:243px">
    <div class="hero-caption">
       <div class="container fg-white h-100">
         <div class="row justify-content-center">
@@ -78,12 +78,12 @@
         {{ method_field('GET') }}
           <div class="form-group wow fadeInUp">
             <label for="message" class="fw-medium fg-grey">Email</label>
-            <input type="text" class="form-control" name="email" id="useremail" required="">
+            <input type="text" class="form-control" name="email" id="useremail" required="" style="border-radius:40px">
           </div>
 
           <div class="form-group wow fadeInUp">
             <label for="message" class="fw-medium fg-grey">Password</label>
-            <input type="password" class="form-control" name="password" id="userpassword" required="">
+            <input type="password" class="form-control" name="password" id="userpassword" required="" style="border-radius:40px">
           </div>
 
 

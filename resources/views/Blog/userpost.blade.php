@@ -43,7 +43,7 @@
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
         
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('auth') }}">Back</a>
+          <a class="nav-link" href="{{ route('getuserpostcomment') }}">Back</a>
         </li>
 
         <li class="nav-item">
@@ -100,10 +100,13 @@
             <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
                         <div class="entry-content">
               <p>{{ $Post->body }}</p>
+         
             </div>
           </article>
         
+
           <div class="entry-meta mb-2" style="text-align:center">
+
               
               <div class="meta-item">
                 <div class="icon">
@@ -126,24 +129,26 @@
                <span>Like</span>
               </div>
             </div>   
-
-              <hr>
-
-
-
-       
+              <br>
           
      <div class="col-md-12 comboxinternal">
      
 
                  @foreach($Post->comments as $com)
                     
-                      <div class="row">
+                 <div class="row" style="margin:0; padding:0">
                         <div class="col-md-1" style="padding-top:16px;"><img class="profilepic" src="{{ asset('profileimg') }}/{{ $com->user_profileimage }}" alt=""></div>
                         <div class="col-md-11">
                         <div class="container mycomment" >
                           <div class="post-id">{{ $com->user_name }}</div>
                           <div>{{ $com->comment }}</div>
+                          @if( $com->user_name  == $user->name )                
+                          <a style="display:flex; float:right" class="btn btn-danger rounded-pill" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Actions</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding:5px; border-radius:20px">
+                            <a class="dropdown-item  rounded-pill" href="/editcomment/{{ $com->id }}">Edit Comment</a>
+                            <a class="dropdown-item  rounded-pill" href="/deletcomment/{{ $com->id }}" style="margin-top:2px">Delete Comment</a>
+                          </div>
+                          @endif
                         </div>
                         </div>
                       </div>

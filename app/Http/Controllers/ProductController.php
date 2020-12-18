@@ -11,13 +11,14 @@ use App\User;
 use App\Post;
 use App\com;
 use App\MyUser;
+use App\like;
 use Hash;
 
 class ProductController extends Controller
 {
 
      public function index(){
-      $user = User::all();
+      $user = User::orderBy('id','DESC')->get();
       return view('Blog.index',compact('user'));
      } 
 
@@ -53,22 +54,26 @@ class ProductController extends Controller
      }      
 
    
-public function AddPost(Request $request, $id){
-  
+public function AddPost(Request $request){
 
   $image = $request->file('file');
-  $imageName = time().'.'.$image->extension();
+  $imageName = $image->getClientOriginalName();
   $image->move(public_path('postimg'), $imageName);
+   
+  $user = Auth::User();
+  $id = $user->id;
   $user = User::find($id);
   $post = new Post();
+
   $post->title =  $request->title;
   $post->body = $request->body;
   $post->image =  $imageName;
   $user->post()->save($post);
   
-  return back()->with('Post_Added', 'Your Post Has Been Uploaded');
+  return response()->json($post);
  
 }
+
 
 public function AddComment(Request $request, $id){
 $post = Post::find($id);
@@ -84,7 +89,8 @@ $comment->user_name = $user_name;
 $comment->user_email = $user_email;
 $comment->user_profileimage = $user_profileimage;
 $post->comments()->save($comment);
- return back()->with('Comment_Added', 'Your Comment Has Been Added');
+return response()->json($comment);
+ //return back()->with('Comment_Added', 'Your Comment Has Been Added');
 }
 
 public function getCommentByPost($id){
@@ -108,7 +114,15 @@ public function getPostByUser(){
   $id = $User->id;
   $user = User::find($id);
   $Post = $user->post;
-    return view('Blog.getpost' ,compact('Post','user'));
+  return view('Blog.viewuserpost' ,compact('Post','user'));
+  }
+
+  public function UserPost($id){
+    $Post = Post::find($id);
+    $Auth_user = Auth::User();
+    $user_id = $Auth_user->id;
+    $user = User::find($user_id);
+    return view('Blog.userpost' ,compact('Post','user'));
   }
 
 public function SignIn(){
@@ -132,7 +146,8 @@ public function DeletPost($id){
     $Post = Post::find($id);
     unlink(public_path('postimg').'/'.$Post->image);
     $Post->delete();
-    return back()->with('Post_Deleted',' Your deleted a post');
+    return response()->json($Post);
+    //return back()->with('Post_Deleted',' Your deleted a post');
 }
 
 public function DeletUser($id){
@@ -142,142 +157,98 @@ public function DeletUser($id){
   return back()->with('User_Deleted',' Entry deleted successfully');
 }
 
-public function DeletComment($com_id, $id){
-  $comment = com::where('user_id','=', $id , 'AND' ,'id' ,'=',$com_id); 
+public function DeletComment($id){
+  $comment = com::find($id); 
   $comment->delete();
   return back()->with('Comment_Deleted',' Comment deleted');
 }
 
-// public function AddUser(Request $request, $id){
+public function EditComment($id){
+  $comment = com::find($id);
+  $Post = $comment->post;
+  return view('Blog.Edit-comment' ,compact('comment','Post'));
+}
 
-// $name = $request->name;
-// $email = $request->email;
-// $password = $request->password;
-// $image = $request->file('file');
-// $imageName = time().'.'.$image->extension();
-// $image->move(public_path('postimg'), $imageName);
+public function EditPost($id){
+  $Post = Post::find($id);
+  $user_id = $Post->user_id;
+  $user = User::find($user_id);
+  return view('Blog.editpost' ,compact('Post','user'));
+}
 
-// $user = new User();
-// $user->name = $name;
-// $user->email = $email;
-// $user->password = $password;
-// $post->image =  $imageName;
-// $post->save();
+public function UpdatePost(Request $request, $id){
+  $image = $request->file('file');
+  $imageName = time().'.'.$image->extension();
+  $image->move(public_path('postimg'), $imageName);
 
-// return back()->with('User_Added', 'Your Account Has Been Created Successfully');
-
-
-// $image = $request->file('file');
-// $imageName = time().'.'.$image->extension();
-// $image->move(public_path('profileimg'), $imageName);
-
-// //$myapp = Post::find($id);
-// $myuser = new User();
-// $myuser->name = $request->username;
-// $myuser->email = $request->useremail;
-// $myuser->password = Hash::make ( $request->get ( 'userpassword' ) );
-// $myuser->profileimage =  $imageName;
-// $myapp->users()->save($myuser);
-//  return back()->with('User_Added', 'Your Account Has Been Created Successfully');
+  
+  $post = Post::find($id);
+  $post->title =  $request->title;
+  $post->body = $request->body;
+  $post->image =  $imageName;
+  $post->save();
+  
+  return back()->with('Post_Added', 'Your Post Has Been Edited');
+}
 
 
-//}
+public function UpdateComment(Request $request, $id){
+  
+  $comment = com::find($id);
+  $comment->comment = $request->message;
+  $post_id = $comment->post_id;
+  $comment->save();
+  return response()->json($comment);
+  //return redirect('getuserpostcomment')->with('Comment_Edited', 'Your Comment Has Been Edited');
+}
 
+public function EditUser(){
+  $Auth_user = Auth::User();
+  $id = $Auth_user->id;
+  $user = User::find($id);
+  return view('Blog.edit-user-profile', compact('user'));
+}
 
+public function UpdateUser(Request $request ,$id){
+  $user = User::find($id);
 
-    // public function UpdateCoverPage(Request $request){
-
-    //     $title1 = $request->title1;
-    //     $title2 = $request->title2;
-    //     $paragraph = $request->paragraph;
-
-    //     $image = $request->file('file1');
-    //     $imageName = time().'.'.$image->extension();
-    //     $image->move(public_path('coverpage'), $imageName);
-
-    //     $pix = $request->file('file2');
-    //     $pixName = time().'.'.$pix->extension();
-    //     $pix->move(public_path('mixpix'), $pixName);
-
-
-    //     $CoverPage = new coverpage();
-    //     $CoverPage->title1 = $title1;
-    //     $CoverPage->title2 = $title2;
-    //     $CoverPage->post_id = 1;
-    //     $CoverPage->paragraph = $paragraph;
-    //     $CoverPage->image =  $imageName;
-    //     $CoverPage->pix =  $pixName;
-    //     $CoverPage->save();
-        
-    //     // $coverImage = $CoverPage->find($CoverPage->id-1);
-    //     // unlink(public_path('coverpage').'/'.$coverImage->image);
-    //     // $coverImage->delete();
+      $name = $request->name;
+      $email = $request->email;
+      $password = $request->password;
+      $image = $request->file('file');
+      $imageName = time().'.'.$image->extension();
+      $image->move(public_path('profileimg'), $imageName);
       
+      try {
+      $user->name = $name;
+      $user->email = $email;
+      $user->password = Hash::make($password);
+      $user->profileimage =  $imageName;
+      $user->role = "user";
+      $user->save();
       
-    //     return back()->with('Record_Added', 'Record has been inserted');
-    // }
+      return back()->with('User_Updated', 'Your Account Has Been Updated Successfully');
+
+       } catch (\Exception $e) { // It's actually a QueryException but this works too
+            if ($e->getCode() == 23000) {
+                // Deal with duplicate key error 
+                return back()->with('User_Exist', 'Ooops! This User already exist');
+            }
+       }
+}
 
 
-    //     public function DeletCoverPageImg($id){
-    //     $CoverPage = coverpage::find($id);
-    //     unlink(public_path('coverpage').'/'.$CoverPage->image);
-    //     unlink(public_path('mixpix').'/'.$CoverPage->pix);
-    //     $CoverPage->delete();
-    //     return back()->with('CoverPageInfo_Deleted',' Entry deleted successfully');
-    //   }
+public function AddLike($id){
+  $post = Post::find($id);
+  $like = new like();
+  $like->user_id = $user_id;
+  $like->tab = 1;
+  $post->likes()->save($like);
+  return back()->with('Like_Added', 'Liked');
+  }
 
 
-    //   public function UpdateCollections(Request $request){
-    //     $title = $request->title;
-    //     $body = $request->body;
-    //     $image = $request->file('file');
-    //     $imageName = time().'.'.$image->extension();
-    //     $image->move(public_path('collections'), $imageName);
-
-    //     $Collections = new collections();
-    //     $Collections->title = $title;
-    //     $Collections->post_id = 1;
-    //     $Collections->body = $body;
-    //     $Collections->image =  $imageName;
-    //     $Collections->save();
-        
-    //     return back()->with('Record_Added', 'Record has been inserted');
-    // }
-
-    // public function DeletCollection($id){
-    //   $Collections = collections::find($id);
-    //   unlink(public_path('collections').'/'.$Collections->image);
-    //   $Collections->delete();
-    //   return back()->with('CoverPageInfo_Deleted',' Entry deleted successfully');
-    // }
-
-
-  //   public function UpdateCostomerServices(Request $request){
-  //     $title = $request->title;
-  //     $body = $request->body;
-  //     $image = $request->file('file');
-  //     $imageName = time().'.'.$image->extension();
-  //     $image->move(public_path('costomerservice'), $imageName);
-
-  //     $CostomerService = new costomerservice();
-  //     $CostomerService->title = $title;
-  //     $CostomerService->post_id = 1;
-  //     $CostomerService->body = $body;
-  //     $CostomerService->image =  $imageName;
-  //     $CostomerService->save();
-      
-  //     return back()->with('Record_Added', 'Record has been inserted');
-  // }
-
-  // public function DeletCostomerServices($id){
-  //   $CostomerService = costomerservice::find($id);
-  //   unlink(public_path('costomerservice').'/'.$CostomerService->image);
-  //   $CostomerService->delete();
-  //   return back()->with('CoverPageInfo_Deleted',' Entry deleted successfully');
-  // }
-
-
-
+ 
 
 //     /**
 //      * Handle User Registration

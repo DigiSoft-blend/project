@@ -10,8 +10,7 @@
 
   <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
 
-  <meta name="_token" content="{{csrf_token()}}" >
-
+  
   <title>Mobster - One page app template</title>
 
   <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
@@ -27,7 +26,6 @@
   <link rel="stylesheet" href="../assets/css/mobster.css">
   <link rel="stylesheet" href="../assets/css/mystyle.css">
 </head>
-
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-floating">
@@ -57,8 +55,8 @@
   </div>
 </nav>
 
-<main>      
-  <div class="row">
+<main>
+<div class="row">
   <div class="container">
          <div class="col-md-12">
            <div class="comment-area com-area">
@@ -68,8 +66,18 @@
                 <img src="{{ asset('profileimg') }}/{{ $user->profileimage }}" alt="Image placeholder">
                 </div>
                 <div class="comment-body">
-                <h3 style="color:white">Post by <span class="name"> {{ $user->name }}</span></h3>
+                <h3 style="color:white"><span class="name"> {{ $user->name }}</span></h3>
                 <hr>
+                @if(Session::has('Comment_Edited'))
+                  <div class="alert alert-success" role="alert">
+                  {{ Session::get('Comment_Edited') }}
+                  </div>
+                 @endif
+                @if(Session::has('Post_Deleted'))
+                 <div class="webchat" role="alert" style="text-align:center">
+                  {{ Session::get('Post_Deleted') }}
+                 </div>
+                 @endif
                 <span><a class="link" href="{{ route('getuserpostcomment') }}" style="text-decoration:none; color:beige">Contact {{ $user->name }} </a></span>
               </div>
               </li>
@@ -78,15 +86,15 @@
         </div>
         </div>
       </div>
-           
-  
-  <br>
+
   <div class="page-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 py-3">
        
-      
+
+    @foreach($Post as $Post)
+
           <article class="blog-entry">
             <div class="entry-header">
               <div class="post-thumbnail">
@@ -97,17 +105,28 @@
                 <span>Feb</span>
               </div>
             </div>
-            <div class="post-title"><a href="blog-details.html">{{ $Post->title }}</a></div>
+            <div class="post-title"><a href="blog-details.html">{{ $Post->id }}</a></div>
                         <div class="entry-content">
               <p>{{ $Post->body }}</p>
             </div>
+            <a href="#" class="btn btn-primary rounded-pill">Continue Reading</a>
+           
+          <a style="display:flex; float:right" class="btn btn-danger rounded-pill" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Actions</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding:5px; border-radius:20px">
+            <a class="dropdown-item  rounded-pill" href="/editpost/{{ $Post->id }}">Edit Post</a>
+            <a class="dropdown-item  rounded-pill" id="link"  href="/deletpost/{{ $Post->id }}" style="margin-top:2px">Delete Post</a>
+          </div>
+         
+       
           </article>
         
+         
+
           <div class="entry-meta mb-2" style="text-align:center">
               
               <div class="meta-item">
                 <div class="icon">
-                  <span class="mai-chatbubble-ellipses"></span>
+                 <a href="/userpost/{{ $Post->id }}" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
                 </div>
                
                 <span>{{$Post->comments->count()}} 
@@ -129,65 +148,13 @@
 
               <hr>
 
+          
+     @endforeach
 
+        </div>
+       
 
        
-          
-     <div class="col-md-12 comboxinternal">
-     
-
-                 @foreach($Post->comments as $com)
-                    
-                      <div class="row">
-                        <div class="col-md-1" style="padding-top:16px;"><img class="profilepic" src="{{ asset('profileimg') }}/{{ $com->user_profileimage }}" alt=""></div>
-                        <div class="col-md-11">
-                        <div class="container mycomment" >
-                          <div class="post-id">{{ $com->user_name }}</div>
-                          <div>{{ $com->comment }}</div>
-                        </div>
-                        </div>
-                      </div>
-                   
-                  
-                <div class="entry-meta mb-2" style="padding-left:85px">
-                <div class="meta-item">
-                  <div class="icon">
-                   <a href="" style="color:white; text-decoration:none"><span class="mai-chatbubble-ellipses"></span></a> 
-                  </div>
-                  <a href="#">Reply</a>
-                </div>
-  
-                <div class="meta-item">
-                  <div class="icon">
-                    <span class="fa fa-smile"></span>
-                  </div>
-                  <a href="#">Like</a>
-                </div>
-              </div>
-          @endforeach
-           </div>   
-  
-        <form id="commentsForm" class="mt-5">
-            @if(Session::has('Comment_Added'))
-              <div class="alert alert-success" role="alert">
-                {{ Session::get('Comment_Added') }}
-              </div>
-             @endif
-          {{ csrf_field() }}
-            <div class="combox-footer">
-            <div class="form-group">
-              <input type="text" class="form-control rounded-pill" name="message" id="message" placeholder="What do you think ?" required="">
-            </div>
-  
-            <div class="form-group mt-4">
-              <button type="submit" class="btn btn-primary rounded-pill">Send</button>
-            </div>
-            </div>
-          </form>
-  
-        </div>
-
-        
         <!-- Sidebar -->
         <div class="col-lg-4 py-3">
           <div class="widget-wrap">
@@ -292,33 +259,7 @@
 
 <script src="../assets/js/mobster.js"></script>
 
-<script>
-$("#commentsForm").submit(function(e){
-  e.preventDefault();
-  let formData = new FormData(this);
-  $.ajax({
-    headers:{
-       'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-     },
-    url: "{{url('addcomment/'.$Post->id)}}",
-    type:"POST",
-    contentType: false,
-    processData: false,
-    data:formData,
-    success:function(response){
-     
-     if(response){
-      alert('Data Updated')
-      location.reload();
-     } 
-    },
-    error: function(response, textStatus, errorThrown){
-       console.log(response);
-     },
-  });
-});
+
 </script>
-
-
 </body>
 </html>

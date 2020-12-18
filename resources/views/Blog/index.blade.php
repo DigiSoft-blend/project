@@ -10,6 +10,8 @@
 
   <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
 
+  
+
   <title>Silas Udofias Enterprise</title>
 
   <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
@@ -58,13 +60,13 @@
 </nav>
 
 <main>
-  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../coverimg/banner2.png);">
+  <div class="page-hero-section bg-image hero-mini" style="background-image: url(../coverimg/intro-bg.png);">
   <br><br>
     <div class="hero-caption">
       <div class="container fg-white h-100">
         <div class="row justify-content-center align-items-center text-center h-100">
           <div class="col-lg-6">
-            <h3 class="mb-4 fw-medium">Welcome to <span class="webchat" >WebChat</span></h3>
+            <h3 class="mb-4 fw-medium">Welcome to <span class="" >WebChat</span></h3>
             <p> <a class="btn btn-primary rounded-pill" href="{{ route('Signin') }}">Sign in as participant</a></p>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-dark justify-content-center bg-transparent">
@@ -107,11 +109,14 @@
             
               <div class="meta-item">
                 <div class="icon">
-                  <span class="mai-pricetags"></span>
-                </div>
-                Category: 
-                <a href="#">Business</a>, 
-                <a href="#">Finances</a>
+                 <a href="/addlike/{{ $Post->id }}"style="text-decoration:none; color:white" ><span class="mai-pricetags"></span></a>
+                </div> 
+                {{$Post->likes()->count()}} 
+                @if($Post->likes()->count() > 1)
+                    Likes
+                    @else
+                     Like
+                    @endif
               </div>
               <div class="meta-item">
                 <div class="icon">
@@ -135,10 +140,7 @@
         
 
           
-
-
-
-
+  
 
 
         </div>
@@ -319,6 +321,10 @@
 <script src="../assets/vendor/wow/wow.min.js"></script>
 
 <script src="../assets/js/mobster.js"></script>
+
+
+
+
 
 </body>
 </html>
